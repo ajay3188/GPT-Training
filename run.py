@@ -1,4 +1,6 @@
 import gradio as gr
+import os
+from dotenv import load_dotenv
 from langchain.chat_models import AzureChatOpenAI
 from langchain.prompts import (
     PromptTemplate,
@@ -8,11 +10,12 @@ from langchain.prompts import (
     HumanMessagePromptTemplate,
 )
 
-# Constants for calling the Azure OpenAI service
+# Load environment variables for calling the Azure OpenAI service
+load_dotenv()
 openai_api_type = "azure"
-gpt4_endpoint = "https://TODO.openai.azure.com/"            # Your endpoint will look something like this: https://YOUR_AOAI_RESOURCE_NAME.openai.azure.com/
-gpt4_api_key = "TODO"                                       # Your key will look something like this: 00000000000000000000000000000000
-gpt4_deployment_name="gpt-4"
+gpt4_endpoint = os.getenv("AZURE_OPENAI_API_ENDPOINT")
+gpt4_api_key = os.getenv("AZURE_OPENAI_API_KEY")
+gpt4_deployment_name=os.getenv("AZURE_OPENAI_DEPLOYMENT")
 
 # Create instance to call GPT-4
 gpt4 = AzureChatOpenAI(
@@ -24,12 +27,12 @@ gpt4 = AzureChatOpenAI(
 )
 
 def generate_quiz(rag_from_manual):
-    system_template="Your role is a trainer to help new employees learn their job working at a restaurant.  You generate a multiple-choice quiz question to train an employee, when given information from the equipment manuals and employee guidebooks.\n"
+    system_template="Your role is a trainer to help new employees learn their job.  You generate a multiple-choice quiz question to train an employee, when given information from the equipment manuals and employee guidebooks.\n"
     system_message_prompt = SystemMessagePromptTemplate.from_template(system_template)
 
     user_prompt=PromptTemplate(
         template="## Manual \n {rag_from_manual} \n" +
-                "## Question \n The above manual is for equipment used at the restaurant. Write a quiz question for a new employee to test if they understand the above content. The multiple choice question should have only one correct answer.\n" +
+                "## Question \n The above manual is for equipment used on the job. Write a quiz question for a new employee to test if they understand the above content. The multiple choice question should have only one correct answer.\n" +
                 "## Quiz Question \n",
         input_variables=["rag_from_manual"],
     )
@@ -48,7 +51,7 @@ def generate_quiz(rag_from_manual):
     return output.content
 
 def evaluate_quiz(excerpt, quiz, user_answer):
-    system_template="Your role is a quiz checker to help new employees learn their job working at a restaurant.  You evaluate a multiple-choice quiz question to train an employee and the employee's answer, and provide feedback.  You should compliment where they do something right and gently correct where they mess up.\n"
+    system_template="Your role is a quiz checker to help new employees learn their job.  You evaluate a multiple-choice quiz question to train an employee and the employee's answer, and provide feedback.  You should compliment where they do something right and gently correct where they mess up.\n"
     system_message_prompt = SystemMessagePromptTemplate.from_template(system_template)
 
     user_prompt=PromptTemplate(

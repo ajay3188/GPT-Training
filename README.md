@@ -12,10 +12,10 @@ This project requires creating an Azure OpenAI resource to run the GPT-4 model i
 + After approval, create an Azure OpenAI resource at https://portal.azure.com/#create/Microsoft.CognitiveServicesOpenAI following the instructions at https://learn.microsoft.com/azure/cognitive-services/openai/how-to/create-resource.  
 + You will need to create a model deployment of a gpt-4 model.  Follow the instructions [here](https://learn.microsoft.com/en-us/azure/cognitive-services/openai/how-to/create-resource#deploy-a-model).  
 
-Next, after cloning this repo locally, update the run.py file with your settings.  
-+ Update **gpt4_endpoint** with the name of your Azure OpenAI resource; this value should look like this: "https://YOUR_AOAI_RESOURCE_NAME.openai.azure.com/"
-+ Update **gpt4_api_key** with the corresponding API key for your Azure OpenAI resource.  
-+ Update **gpt4_deployment_name** with the name of your model deployment for GPT-4 in your Azure OpenAI resource.  
+Next, after cloning this repo locally, update the .env file with your settings.  
++ Update **AZURE_OPENAI_API_ENDPOINT** with the name of your Azure OpenAI resource; this value should look like this: "https://YOUR_AOAI_RESOURCE_NAME.openai.azure.com/"
++ Update **AZURE_OPENAI_API_KEY** with the corresponding API key for your Azure OpenAI resource.  
++ Update **AZURE_OPENAI_DEPLOYMENT** with the name of your model deployment for GPT-4 in your Azure OpenAI resource.  
 
 Finally, use the following commands in a python environment (such as an Anaconda prompt window) to set up your environment.  This creates and activates an environment and installs the required packages.  For subsequent runs after the initial install, you will only need to activate the environment and then run the python script.  
 
