@@ -15,12 +15,12 @@ load_dotenv()
 openai_api_type = "azure"
 gpt4_endpoint = os.getenv("AZURE_OPENAI_API_ENDPOINT")
 gpt4_api_key = os.getenv("AZURE_OPENAI_API_KEY")
-gpt4_deployment_name=os.getenv("AZURE_OPENAI_DEPLOYMENT")
+gpt4_deployment_name=os.getenv("AZURE_OPENAI_DEPLOYMENT") ## Please use your model "deployment name" and not the base model ID itself.
 
 # Create instance to call GPT-4
 gpt4 = AzureChatOpenAI(
     openai_api_base=gpt4_endpoint,
-    openai_api_version="2023-03-15-preview",
+    openai_api_version="2023-03-15-preview", ## This is deprecated, please use the latest API version as of current date.
     deployment_name=gpt4_deployment_name,
     openai_api_key=gpt4_api_key,
     openai_api_type = openai_api_type,
